@@ -63,7 +63,7 @@ class HashTable:
         """
         hash_num = 5381
         for char in key:
-            hash_num = (hash_num * 33) + ord(char)
+            hash_num = (hash_num * 33 + hash_num) + ord(char)
         return hash_num
 
     def hash_index(self, key):
@@ -82,7 +82,7 @@ class HashTable:
 
         Implement this.
         """
-        hashed_key = hash(key) % self.capacity
+        hashed_key = self.hash_index(key)
         data = self.buckets[hashed_key]
         if data is None:
             self.buckets[hashed_key] = HashTableEntry(key, value)
@@ -96,7 +96,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        hashed_key = self.hash_index(key)
+        self.buckets[hashed_key]
 
     def get(self, key):
         """
@@ -106,7 +107,12 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        hashed_key = self.hash_index(key)
+        data = self.buckets[hashed_key]
+        if data is not None:
+            while data:
+                if data.key == key:
+                    return data.value
 
     def resize(self, new_capacity):
         """
